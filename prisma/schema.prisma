@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PropertyType {
+  HOUSE
+  APARTMENT
+  LAND
+  COMMERCIAL
+}
+
+enum ListingStatus {
+  AVAILABLE
+  UNDER_OFFER
+  SOLD
+  LET
+}
+
+enum ViewingStatus {
+  REQUESTED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Agent {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  phone       String?
+  agencyName  String?
+  createdAt   DateTime @default(now())
+
+  listings    Listing[]
+  reviews     Review[]
+
+  @@map("agents")
+}
+
+model Listing {
+  id               String        @id @default(uuid())
+  agentId          String
+  agent            Agent         @relation(fields: [agentId], references: [id])
+  title            String
+  description      String?
+  propertyType     PropertyType
+  priceMinorUnits  BigInt
+  currency         String        @default("NGN")
+  location         String
+  bedrooms         Int?
+  bathrooms        Int?
+  sizeSqm          Int?
+  status           ListingStatus @default(AVAILABLE)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  viewings         Viewing[]
+
+  @@index([agentId])
+  @@index([status])
+  @@index([propertyType])
+  @@map("listings")
+}
+
+model Viewing {
+  id              String        @id @default(uuid())
+  listingId       String
+  listing         Listing       @relation(fields: [listingId], references: [id])
+  requesterName   String
+  requesterEmail  String
+  requesterPhone  String?
+  scheduledAt     DateTime
+  status          ViewingStatus @default(REQUESTED)
+  createdAt       DateTime      @default(now())
+
+  review          Review?
+
+  @@index([listingId])
+  @@index([status])
+  @@map("viewings")
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  agentId    String
+  agent      Agent    @relation(fields: [agentId], references: [id])
+  viewingId  String   @unique
+  viewing    Viewing  @relation(fields: [viewingId], references: [id])
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  @@index([agentId])
+  @@map("reviews")
+}
