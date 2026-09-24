@@ -9,6 +9,7 @@ import { rateLimiter } from "./middleware/rateLimit";
 
 export function createApp() {
   const app = express();
+  app.set("trust proxy", 1);
 
   app.use(express.json());
 
