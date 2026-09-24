@@ -2,7 +2,7 @@
 
 A REST API serving realistic Lagos property listing data, built for Task 1 of the bootcamp's Five Engineering Tasks. Covers agents, listings, viewings (booked property viewings), and reviews.
 
-**Live API URL:** `TODO — fill in after deployment`
+**Live API URL:** https://prop-api-ebon.vercel.app
 
 ## Tech stack
 

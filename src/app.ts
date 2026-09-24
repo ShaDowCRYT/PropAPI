@@ -1,4 +1,6 @@
 import express from "express";
+import path from "path";
+import cors from "cors";
 import "./lib/json";
 import listingsRouter from "./routes/listings";
 import agentsRouter from "./routes/agents";
@@ -12,6 +14,10 @@ export function createApp() {
   app.set("trust proxy", 1);
 
   app.use(express.json());
+
+  app.use(cors());
+
+  app.use(express.static(path.join(__dirname, "..", "public")));
 
   app.use(rateLimiter);
 

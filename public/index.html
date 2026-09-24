@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PropAPI Listings</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+  h1 { margin-bottom: 0.25rem; }
+  .controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  select, button { padding: 0.5rem; font-size: 1rem; }
+  .listing { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+  .listing h3 { margin: 0 0 0.25rem 0; }
+  .price { font-weight: bold; color: #16794b; }
+  .empty, .error { padding: 2rem; text-align: center; color: #666; }
+  .error { color: #b00020; }
+  .pager { display: flex; justify-content: space-between; margin-top: 1rem; }
+  .loading { opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<h1>PropAPI</h1>
+<p id="meta-info">Loading...</p>
+
+<div class="controls">
+  <select id="propertyType">
+    <option value="">All types</option>
+    <option value="HOUSE">House</option>
+    <option value="APARTMENT">Apartment</option>
+    <option value="LAND">Land</option>
+    <option value="COMMERCIAL">Commercial</option>
+  </select>
+  <select id="status">
+    <option value="">All statuses</option>
+    <option value="AVAILABLE">Available</option>
+    <option value="UNDER_OFFER">Under offer</option>
+    <option value="SOLD">Sold</option>
+    <option value="LET">Let</option>
+  </select>
+</div>
+
+<div id="results"></div>
+
+<div class="pager">
+  <button id="prevBtn">← Previous</button>
+  <button id="nextBtn">Next →</button>
+</div>
+
+<script>
+  const API_BASE = "https://prop-api-ebon.vercel.app/api/v1";
+  const LIMIT = 10;
+  let offset = 0;
+
+  const resultsEl = document.getElementById("results");
+  const metaEl = document.getElementById("meta-info");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const propertyTypeSelect = document.getElementById("propertyType");
+  const statusSelect = document.getElementById("status");
+
+  function formatPrice(minorUnits, currency) {
+    const major = Number(BigInt(minorUnits)) / 100;
+    return new Intl.NumberFormat("en-NG", { style: "currency", currency }).format(major);
+  }
+
+  async function loadListings() {
+    resultsEl.classList.add("loading");
+    resultsEl.innerHTML = "";
+    metaEl.textContent = "Loading...";
+
+    const params = new URLSearchParams({ limit: LIMIT, offset });
+    if (propertyTypeSelect.value) params.set("propertyType", propertyTypeSelect.value);
+    if (statusSelect.value) params.set("status", statusSelect.value);
+
+    try {
+      const res = await fetch(`${API_BASE}/listings?${params}`);
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body?.error?.message || `Request failed with status ${res.status}`);
+      }
+      const { data, meta } = await res.json();
+
+      resultsEl.classList.remove("loading");
+
+      if (data.length === 0) {
+        resultsEl.innerHTML = '<div class="empty">No listings match these filters.</div>';
+      } else {
+        resultsEl.innerHTML = data.map(l => `
+          <div class="listing">
+            <h3>${l.title}</h3>
+            <p>${l.location} — ${l.propertyType} — ${l.status}</p>
+            <p class="price">${formatPrice(l.priceMinorUnits, l.currency)}</p>
+          </div>
+        `).join("");
+      }
+
+      metaEl.textContent = `Showing ${offset + 1}–${offset + data.length} of ${meta.total}`;
+      prevBtn.disabled = offset === 0;
+      nextBtn.disabled = !meta.hasMore;
+    } catch (err) {
+      resultsEl.classList.remove("loading");
+      resultsEl.innerHTML = `<div class="error">Could not load listings: ${err.message}</div>`;
+      metaEl.textContent = "";
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+    }
+  }
+
+  prevBtn.addEventListener("click", () => { offset = Math.max(0, offset - LIMIT); loadListings(); });
+  nextBtn.addEventListener("click", () => { offset += LIMIT; loadListings(); });
+  propertyTypeSelect.addEventListener("change", () => { offset = 0; loadListings(); });
+  statusSelect.addEventListener("change", () => { offset = 0; loadListings(); });
+
+  loadListings();
+</script>
+
+</body>
+</html>
