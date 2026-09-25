@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dead Letter Queue — PropAPI</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  .job { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+  .job h3 { margin: 0 0 0.25rem 0; font-family: monospace; font-size: 0.9rem; }
+  .error { color: #b00020; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; }
+  .payload { color: #555; font-family: monospace; font-size: 0.8rem; }
+  button { padding: 0.4rem 0.8rem; margin-top: 0.5rem; cursor: pointer; }
+  .empty { text-align: center; color: #666; padding: 2rem; }
+</style>
+</head>
+<body>
+
+<h1>Dead Letter Queue</h1>
+<div id="jobs">Loading...</div>
+
+<script>
+  async function load() {
+    const res = await fetch("/api/v1/jobs?status=DEAD");
+    const { data } = await res.json();
+    const el = document.getElementById("jobs");
+
+    if (data.length === 0) {
+      el.innerHTML = '<div class="empty">No dead jobs. 🎉</div>';
+      return;
+    }
+
+    el.innerHTML = data.map(j => `
+      <div class="job">
+        <h3>${j.id} — ${j.type}</h3>
+        <div class="payload">Payload: ${JSON.stringify(j.payload)}</div>
+        <div class="payload">Attempts: ${j.attempts}/${j.maxAttempts}</div>
+        <div class="error">${j.lastError || "(no error recorded)"}</div>
+        <button onclick="retry('${j.id}')">Retry this job</button>
+      </div>
+    `).join("");
+  }
+
+  async function retry(id) {
+    await fetch(`/api/v1/jobs/${id}/retry`, { method: "POST" });
+    load();
+  }
+
+  load();
+</script>
+
+</body>
+</html>

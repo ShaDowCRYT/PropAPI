@@ -98,3 +98,29 @@ model Review {
   @@index([agentId])
   @@map("reviews")
 }
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  DEAD
+}
+
+model Job {
+  id              String    @id @default(uuid())
+  type            String
+  payload         Json
+  status          JobStatus @default(PENDING)
+  attempts        Int       @default(0)
+  maxAttempts     Int       @default(5)
+  lastError       String?
+  runAt           DateTime  @default(now())
+  startedAt       DateTime?
+  finishedAt      DateTime?
+  idempotencyKey  String    @unique
+  createdAt       DateTime  @default(now())
+
+  @@index([status, runAt])
+  @@map("jobs")
+}

@@ -1,0 +1,15 @@
+The worker ran for 80 seconds, completed all five failed attempts, and was stopped by the timeout.
+> propapi@1.0.0 worker
+> ts-node src/jobs/worker.ts
+
+[worker] started, concurrency=3
+[worker] claimed job 07e1ec3b-f9f6-423d-9231-6914713f6b27 (always_fail), attempt 1
+[worker] job 07e1ec3b-f9f6-423d-9231-6914713f6b27 FAILED (attempt 1), retrying in 4068ms: This job always fails, on purpose, for testing.
+[worker] claimed job 07e1ec3b-f9f6-423d-9231-6914713f6b27 (always_fail), attempt 2
+[worker] job 07e1ec3b-f9f6-423d-9231-6914713f6b27 FAILED (attempt 2), retrying in 9139ms: This job always fails, on purpose, for testing.
+[worker] claimed job 07e1ec3b-f9f6-423d-9231-6914713f6b27 (always_fail), attempt 3
+[worker] job 07e1ec3b-f9f6-423d-9231-6914713f6b27 FAILED (attempt 3), retrying in 17400ms: This job always fails, on purpose, for testing.
+[worker] claimed job 07e1ec3b-f9f6-423d-9231-6914713f6b27 (always_fail), attempt 4
+[worker] job 07e1ec3b-f9f6-423d-9231-6914713f6b27 FAILED (attempt 4), retrying in 33451ms: This job always fails, on purpose, for testing.
+[worker] claimed job 07e1ec3b-f9f6-423d-9231-6914713f6b27 (always_fail), attempt 5
+[worker] job 07e1ec3b-f9f6-423d-9231-6914713f6b27 DEAD after 5 attempts: This job always fails, on purpose, for testing.

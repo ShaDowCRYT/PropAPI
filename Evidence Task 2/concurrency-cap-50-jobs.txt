@@ -1,0 +1,105 @@
+npx tsc --noEmit passed and 50 jobs were inserted. Full worker log from the 62-second run:
+> propapi@1.0.0 worker
+> ts-node src/jobs/worker.ts
+
+[worker] started, concurrency=3
+[worker] claimed job cf7ee57e-204d-4a78-b5e8-a3944f1182fc (slow_job), attempt 1
+[worker] claimed job cc08f44a-caed-4047-b117-c13df6e885d5 (slow_job), attempt 1
+[worker] claimed job c8179c58-26b8-43ee-a368-6becaef16c6d (slow_job), attempt 1
+[worker] job cf7ee57e-204d-4a78-b5e8-a3944f1182fc SUCCEEDED
+[worker] job cc08f44a-caed-4047-b117-c13df6e885d5 SUCCEEDED
+[worker] job c8179c58-26b8-43ee-a368-6becaef16c6d SUCCEEDED
+[worker] claimed job d54a9e26-d9dc-4abc-93c3-1a64bbd5590c (slow_job), attempt 1
+[worker] claimed job d02b5ed0-52d4-47fd-8c04-3932a2feed9a (slow_job), attempt 1
+[worker] claimed job a5051d67-24f7-43aa-a00a-1cb51186e96b (slow_job), attempt 1
+[worker] job d54a9e26-d9dc-4abc-93c3-1a64bbd5590c SUCCEEDED
+[worker] job d02b5ed0-52d4-47fd-8c04-3932a2feed9a SUCCEEDED
+[worker] job a5051d67-24f7-43aa-a00a-1cb51186e96b SUCCEEDED
+[worker] claimed job c5c56274-13ba-44f6-b79a-a16043a6794f (slow_job), attempt 1
+[worker] claimed job c38b3d69-fb9c-4534-8ca9-99dfc9951e75 (slow_job), attempt 1
+[worker] claimed job 10e9cca9-50d1-41cd-adaf-b41680fee2e7 (slow_job), attempt 1
+[worker] job c5c56274-13ba-44f6-b79a-a16043a6794f SUCCEEDED
+[worker] job c38b3d69-fb9c-4534-8ca9-99dfc9951e75 SUCCEEDED
+[worker] job 10e9cca9-50d1-41cd-adaf-b41680fee2e7 SUCCEEDED
+[worker] claimed job 7c463079-1a51-462b-be09-5a5f829babd8 (slow_job), attempt 1
+[worker] claimed job cff039bf-7e50-463f-bad8-dabdaa68b203 (slow_job), attempt 1
+[worker] claimed job c9791351-de42-4257-a13d-a33bc97fef68 (slow_job), attempt 1
+[worker] job 7c463079-1a51-462b-be09-5a5f829babd8 SUCCEEDED
+[worker] job cff039bf-7e50-463f-bad8-dabdaa68b203 SUCCEEDED
+[worker] job c9791351-de42-4257-a13d-a33bc97fef68 SUCCEEDED
+[worker] claimed job bb2ba01c-9ba6-4ceb-a421-c39961eb99f6 (slow_job), attempt 1
+[worker] claimed job eddc90fe-04ba-4472-985d-b98c96931d4e (slow_job), attempt 1
+[worker] claimed job c50d7929-fff9-4cba-bca8-4f752a72cb13 (slow_job), attempt 1
+[worker] job eddc90fe-04ba-4472-985d-b98c96931d4e SUCCEEDED
+[worker] job c50d7929-fff9-4cba-bca8-4f752a72cb13 SUCCEEDED
+[worker] job bb2ba01c-9ba6-4ceb-a421-c39961eb99f6 SUCCEEDED
+[worker] claimed job b97dcd38-75b4-44db-941a-9ff0ab825c5c (slow_job), attempt 1
+[worker] claimed job e9582fbc-7d93-49c3-a54b-183ac633d839 (slow_job), attempt 1
+[worker] claimed job b322c488-349b-447e-974c-a8a67eafedbb (slow_job), attempt 1
+[worker] job b97dcd38-75b4-44db-941a-9ff0ab825c5c SUCCEEDED
+[worker] job e9582fbc-7d93-49c3-a54b-183ac633d839 SUCCEEDED
+[worker] job b322c488-349b-447e-974c-a8a67eafedbb SUCCEEDED
+[worker] claimed job 07b5e8ec-c744-49f2-a21a-dfd5cf7270d8 (slow_job), attempt 1
+[worker] claimed job e97efc8b-cae8-45a1-893d-458a07db403a (slow_job), attempt 1
+[worker] claimed job c7eb9d5e-7cc0-4f4e-abe2-41542e464797 (slow_job), attempt 1
+[worker] job 07b5e8ec-c744-49f2-a21a-dfd5cf7270d8 SUCCEEDED
+[worker] job e97efc8b-cae8-45a1-893d-458a07db403a SUCCEEDED
+[worker] job c7eb9d5e-7cc0-4f4e-abe2-41542e464797 SUCCEEDED
+[worker] claimed job 67b2cc1f-deb0-4388-a9b7-3b53a1fe77ff (slow_job), attempt 1
+[worker] claimed job abe12d7a-eb86-44fb-8829-211cfdf3c119 (slow_job), attempt 1
+[worker] claimed job 6a9cd5ae-9eae-46c8-9f1a-b3e4a8d5c14a (slow_job), attempt 1
+[worker] job 67b2cc1f-deb0-4388-a9b7-3b53a1fe77ff SUCCEEDED
+[worker] job abe12d7a-eb86-44fb-8829-211cfdf3c119 SUCCEEDED
+[worker] job 6a9cd5ae-9eae-46c8-9f1a-b3e4a8d5c14a SUCCEEDED
+[worker] claimed job f325efef-2f8c-4338-8fa1-a36215f197ad (slow_job), attempt 1
+[worker] claimed job 18560438-f082-4693-9f90-d87db4a1e3ae (slow_job), attempt 1
+[worker] claimed job 3da9ae95-0a92-4c86-9713-754a422d6d86 (slow_job), attempt 1
+[worker] job f325efef-2f8c-4338-8fa1-a36215f197ad SUCCEEDED
+[worker] job 18560438-f082-4693-9f90-d87db4a1e3ae SUCCEEDED
+[worker] job 3da9ae95-0a92-4c86-9713-754a422d6d86 SUCCEEDED
+[worker] claimed job d628bda7-dae2-4c72-9e09-e34ff595b991 (slow_job), attempt 1
+[worker] claimed job 3d4c8304-a87c-46fc-9d25-ee790bf5103f (slow_job), attempt 1
+[worker] claimed job 460d70ab-f95b-4a8a-a171-1311cf4022d3 (slow_job), attempt 1
+[worker] job 3d4c8304-a87c-46fc-9d25-ee790bf5103f SUCCEEDED
+[worker] job d628bda7-dae2-4c72-9e09-e34ff595b991 SUCCEEDED
+[worker] job 460d70ab-f95b-4a8a-a171-1311cf4022d3 SUCCEEDED
+[worker] claimed job 396539d1-05f7-4fe1-bc72-6b5185a144e3 (slow_job), attempt 1
+[worker] claimed job adf9351b-8d52-4cae-ba7a-322de495f4e4 (slow_job), attempt 1
+[worker] claimed job adc273ec-d368-4145-be40-951948b1bc73 (slow_job), attempt 1
+[worker] job 396539d1-05f7-4fe1-bc72-6b5185a144e3 SUCCEEDED
+[worker] job adf9351b-8d52-4cae-ba7a-322de495f4e4 SUCCEEDED
+[worker] job adc273ec-d368-4145-be40-951948b1bc73 SUCCEEDED
+[worker] claimed job 277bff98-2f17-48bc-9bb4-7fa65b2c71c3 (slow_job), attempt 1
+[worker] claimed job 23ce3b03-4f30-4dbc-84a7-8995f4412478 (slow_job), attempt 1
+[worker] claimed job c711b43f-c265-4031-8daa-632c9b8e26e9 (slow_job), attempt 1
+[worker] job 23ce3b03-4f30-4dbc-84a7-8995f4412478 SUCCEEDED
+[worker] job 277bff98-2f17-48bc-9bb4-7fa65b2c71c3 SUCCEEDED
+[worker] job c711b43f-c265-4031-8daa-632c9b8e26e9 SUCCEEDED
+[worker] claimed job 57aa822e-b8ad-446e-ba4b-8a456166a23c (slow_job), attempt 1
+[worker] claimed job 8607633c-445a-4c69-b00e-1271a16cf1b0 (slow_job), attempt 1
+[worker] claimed job 6297d9bc-4682-47f8-aa4b-c7efe2474252 (slow_job), attempt 1
+[worker] job 8607633c-445a-4c69-b00e-1271a16cf1b0 SUCCEEDED
+[worker] job 57aa822e-b8ad-446e-ba4b-8a456166a23c SUCCEEDED
+[worker] job 6297d9bc-4682-47f8-aa4b-c7efe2474252 SUCCEEDED
+[worker] claimed job 141bbb6c-604d-4ef0-a700-05219e6cc0d8 (slow_job), attempt 1
+[worker] claimed job 7074b774-aedb-4647-ad0b-2f1bfb258492 (slow_job), attempt 1
+[worker] claimed job a3a6a435-801d-4e6d-b20e-15a01a3310fd (slow_job), attempt 1
+[worker] job a3a6a435-801d-4e6d-b20e-15a01a3310fd SUCCEEDED
+[worker] job 7074b774-aedb-4647-ad0b-2f1bfb258492 SUCCEEDED
+[worker] job 141bbb6c-604d-4ef0-a700-05219e6cc0d8 SUCCEEDED
+[worker] claimed job 286def3e-aacf-4b32-9107-991b125a3ecf (slow_job), attempt 1
+[worker] claimed job e5e8d5da-0afe-4800-a54b-6fb9f5d6d815 (slow_job), attempt 1
+[worker] claimed job 6b3994c5-f519-4a10-b619-65b2980cbb8e (slow_job), attempt 1
+[worker] job 286def3e-aacf-4b32-9107-991b125a3ecf SUCCEEDED
+[worker] job e5e8d5da-0afe-4800-a54b-6fb9f5d6d815 SUCCEEDED
+[worker] job 6b3994c5-f519-4a10-b619-65b2980cbb8e SUCCEEDED
+[worker] claimed job 981c822d-2b5e-4553-a0a7-dbdc2a8950f5 (slow_job), attempt 1
+[worker] claimed job c4b5f82c-ca15-421f-89ac-d1622c28f49d (slow_job), attempt 1
+[worker] claimed job 90edf969-fbd5-4c5d-bd8c-7b157eb175f1 (slow_job), attempt 1
+[worker] job 981c822d-2b5e-4553-a0a7-dbdc2a8950f5 SUCCEEDED
+[worker] job c4b5f82c-ca15-421f-89ac-d1622c28f49d SUCCEEDED
+[worker] job 90edf969-fbd5-4c5d-bd8c-7b157eb175f1 SUCCEEDED
+[worker] claimed job 4d5d918d-8ab8-49ea-a91c-f1ff056bf05d (slow_job), attempt 1
+[worker] claimed job 736397a5-f4f5-4542-8fea-03d6a9fb96f7 (slow_job), attempt 1
+[worker] job 4d5d918d-8ab8-49ea-a91c-f1ff056bf05d SUCCEEDED
+[worker] job 736397a5-f4f5-4542-8fea-03d6a9fb96f7 SUCCEEDED

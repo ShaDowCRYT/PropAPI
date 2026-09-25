@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
+import { enqueueJob } from "../lib/jobs";
 import { sendData } from "../lib/envelope";
 import { parsePagination, parseSort, buildMeta } from "../lib/pagination";
 import { parseIdParam } from "../lib/idParam";
@@ -93,6 +94,12 @@ router.post("/", async (req, res, next) => {
         scheduledAt: new Date(result.data.scheduledAt),
       },
     });
+
+    await enqueueJob(
+      "send_viewing_confirmation_email",
+      { viewingId: viewing.id },
+      `viewing-confirmation-${viewing.id}`
+    );
 
     sendData(res, viewing, undefined, 201);
   } catch (err) {
