@@ -42,4 +42,32 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.get("/:id/listings", async (req, res, next) => {
+  try {
+    const id = parseIdParam(req.params.id);
+    const agent = await prisma.agent.findUnique({ where: { id } });
+    if (!agent) {
+      throw notFound("Agent not found");
+    }
+
+    const { limit, offset } = parsePagination(req.query as Record<string, unknown>);
+    const ALLOWED_SORT_FIELDS = ["createdAt", "priceMinorUnits", "title"];
+    const { field, order } = parseSort(req.query as Record<string, unknown>, ALLOWED_SORT_FIELDS, "createdAt");
+
+    const [total, listings] = await Promise.all([
+      prisma.listing.count({ where: { agentId: id } }),
+      prisma.listing.findMany({
+        where: { agentId: id },
+        orderBy: { [field]: order },
+        take: limit,
+        skip: offset,
+      }),
+    ]);
+
+    sendData(res, listings, buildMeta(total, limit, offset));
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;
