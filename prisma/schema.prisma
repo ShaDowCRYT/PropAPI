@@ -64,6 +64,7 @@ model Listing {
   @@index([agentId])
   @@index([status])
   @@index([propertyType])
+  @@index([agentId, createdAt])
   @@map("listings")
 }
 

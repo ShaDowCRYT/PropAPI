@@ -204,6 +204,26 @@ Get one agent. `404` if not found.
 curl http://localhost:3000/api/v1/agents/ed8379aa-0000-0000-0000-000000000000
 ```
 
+### `GET /api/v1/agents/:id/listings`
+
+Nested resource — all listings belonging to one agent. Paginated and sortable, same as the main `/listings` endpoint. Intentionally limited to pagination/sorting only, not the full `/listings` filter set (no `propertyType`/`status` filters) — kept minimal to match the scope of other nested resources in this API; a client needing agent-scoped filtering by property type or status can combine `GET /listings?agentId=...` with the desired filters instead.
+
+**Query parameters:**
+| Param | Type | Default | Notes |
+|---|---|---|---|
+| limit | integer | 20 | max 100, clamped if exceeded |
+| offset | integer | 0 | must be ≥ 0 |
+| sort | string | createdAt | one of: createdAt, priceMinorUnits, title |
+| order | string | asc | asc or desc |
+
+Results are sorted by the requested field, with `id` as a tiebreaker for listings that share the same value — ensuring stable, predictable pagination even when multiple listings have identical prices or creation times.
+
+```bash
+curl "http://localhost:3000/api/v1/agents/ed8379aa-0000-0000-0000-000000000000/listings?sort=priceMinorUnits&order=desc"
+```
+
+Returns `404` if the agent doesn't exist, `400` if `:id` isn't a valid UUID.
+
 ---
 
 ### `GET /api/v1/viewings`

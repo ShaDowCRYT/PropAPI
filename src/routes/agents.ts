@@ -58,7 +58,7 @@ router.get("/:id/listings", async (req, res, next) => {
       prisma.listing.count({ where: { agentId: id } }),
       prisma.listing.findMany({
         where: { agentId: id },
-        orderBy: { [field]: order },
+        orderBy: [{ [field]: order }, { id: "asc" }],
         take: limit,
         skip: offset,
       }),
