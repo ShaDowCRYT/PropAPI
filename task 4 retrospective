@@ -1,0 +1,19 @@
+# Task 4 — Retrospective
+
+## The best comment I received
+
+`enagihauwa`'s note that unrelated files — a Task 2 documentation update and three scratch PowerShell scripts — had been swept into my agent-listings PR. It wasn't a bug in the code at all, but it was the most useful comment of the three reviews, because it was the one thing I genuinely couldn't see myself: from inside my own branch, those files just looked like "stuff that's already there." Checking `git diff main...branch --stat` confirmed it exactly — only one file was actually meant to be in that PR. I moved the legitimate doc change onto `main` directly and removed the scripts. It's a good reminder that branch hygiene is invisible to the author in a way it never is to a reviewer.
+
+## The best comment I gave
+
+The timezone bug on `peerup-api`'s seed script. The PR looked complete and had already passed two other reviews. Instead of trusting the diff, I actually pulled the branch, ran the seed, and checked the real stored times against what the code intended — and found every session time was landing an hour early, because `setHours()` sets local time while Prisma persists `DateTime` as UTC. That meant the seeded data wasn't reproducible across machines or CI, which defeated the entire purpose of the fix the PR was making. I suggested the one-line `setUTCHours` fix directly. This was the clearest example, across all three reviews I gave, of why "pull the branch and run it" is in the brief as its own required step — reading the diff alone would never have caught this.
+
+## What I caught in someone else's code that I've also done in my own
+
+`CONSUMABLE-API`'s `round2` function used `toFixed(2)`, which rounds inconsistently on exact half-cent values because of how those numbers are actually stored in binary — `1.005` silently became `1.00` instead of `1.01`. I found this by testing real edge-case numbers, not by reading the code.
+
+That's the same category of mistake I made myself in Task 1, just a different specific bug: I originally stored `priceMinorUnits` as a 32-bit `Int`, which worked fine against test data but overflowed the moment the seed script generated a realistic high-value Lagos property price. Both bugs share the same root cause — money-handling code that looks correct and passes casual testing, but breaks specifically once it meets real, unround numbers instead of the tidy values you'd naturally type into a quick test by hand. Reviewing someone else's money code made me more confident that testing financial logic specifically needs deliberately ugly test inputs (half-cent values, very large values), not just "does it run."
+
+## What I'd change about how I write pull requests, having now reviewed three of other people's
+
+Check the branch's actual diff against `main` before opening the PR, not after a reviewer points out it's wrong. `git diff main...my-branch --stat` takes five seconds and would have caught the scope problem on my own PR before anyone else had to. I'd also start writing a short "For reviewers" section in every PR description going forward — the one PR I reviewed that included this (`food-delivery-api`) made the review faster and more focused, because the author had already flagged their own open design questions instead of leaving a reviewer to guess what was actually worth scrutinizing.
